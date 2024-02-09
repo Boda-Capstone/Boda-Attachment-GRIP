@@ -14,6 +14,7 @@
 #define LO 10
 #define OFF 0
 
+
 typedef struct
 {
     // Number of the pin the PWM is connected to

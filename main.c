@@ -8,10 +8,6 @@
 #include "src/finger.h"
 #include "src/Attachment.h"
 
-// Global Variables
-uint8_t rec = 0xFF;
-uint8_t tra = 0x64;
-uint8_t input = 0;
 uint8_t numServos = 0;
 
 // Array containint list of all initialized servos
@@ -50,6 +46,7 @@ Attachment a;
  *  - Pitch idea of mode switching where a button/combo is pressed to route all controls to the attachment
  *  - ADD 360 DEGREE SERVO SUPPORT
  */
+
 
 /**
  * FUNCTION: pwm_irq_handler
@@ -94,47 +91,16 @@ void pwm_irq_init()
     irq_set_enabled(PWM_IRQ_WRAP, true);
 }
 
-void limb_spi_init()
-{
-    spi_init(spi_default, 2 * 1000 * 1000);
-    spi_set_format(spi_default, 8, 1, 0, true);
-    spi_set_slave(spi_default, true);
-
-    gpio_set_function(PICO_DEFAULT_SPI_RX_PIN, GPIO_FUNC_SPI);
-    gpio_set_function(PICO_DEFAULT_SPI_SCK_PIN, GPIO_FUNC_SPI);
-    gpio_set_function(PICO_DEFAULT_SPI_TX_PIN, GPIO_FUNC_SPI);
-    gpio_set_function(PICO_DEFAULT_SPI_CSN_PIN, GPIO_FUNC_SPI);
-}
-
-void spi_irq()
-{
-    spi_write_read_blocking(spi_default, (uint8_t *)&tra, (uint8_t *)&input, 1);
-}
-
-void spi_irq_init()
-{
-    spi0_hw->imsc = 1 << 2;
-    irq_set_exclusive_handler(SPI0_IRQ, spi_irq);
-    irq_set_enabled(SPI0_IRQ, true);
-}
-
 int main()
 {
     stdio_init_all();
 
-    // initialize adc for the potentiometer
-    adc_init();
-    // select the current adc channel to get input from.
-    adc_select_input(0);
+    initAttachment(&a);
+
+
 
     // intialize pwm irq for servos
     pwm_irq_init();
-
-    // initialize SPI
-    limb_spi_init();
-
-    // initialize spi irq for control data
-    spi_irq_init();
 
     // // Initialize two servos for finger 1
     initServo(&servos[0], 0, &servoPWMS[0], 4.f, 8193, MD, 0);
@@ -154,12 +120,8 @@ int main()
     initServo(&servos[3], 3, &servoPWMS[3], 4.f, 8193, MD, 0);
     // initServoMapping(&servos[3], 4095, 0);
     setServoLimits(&servos[3], MAX16 / 2, 8192);
-
-    initFinger(&rightFinger, &servos[2], &servos[3]);
-
     numServos = 4;
-
-    initAttachment(&a, &input);
+    initFinger(&rightFinger, &servos[2], &servos[3]);
 
     while (1)
     {
