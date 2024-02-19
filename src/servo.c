@@ -265,13 +265,13 @@ void modeUp(Servo *s)
 {
     switch(s->mode){
         case OFF:
-            s->mode = LO;
+            setMode(s, LO);
             break;
         case LO:
-            s->mode = MD;
+            setMode(s, MD);
             break;
         default: 
-            s->mode = HI;
+            setMode(s, HI);
             break;
     }
 }
@@ -291,13 +291,13 @@ void modeDown(Servo *s)
 {
     switch(s->mode){
         case HI:
-            s->mode = MD;
+            setMode(s, MD);
             break;
         case MD:
-            s->mode = LO;
+            setMode(s, LO);
             break;
         default: 
-            s->mode = OFF;
+            setMode(s, OFF);
             break;
     }
 }

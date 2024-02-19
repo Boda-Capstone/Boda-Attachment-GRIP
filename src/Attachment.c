@@ -15,31 +15,6 @@ uint8_t att_output;
  */
 
 /**
- * FUNCTION: pollButtonFunctions
- * When called, polls each bit in attachment's buttonStatus,
- * if the bit is set, execute the corresponding buttonFunction
- * -------------------------------------------
- * PARAMETERS:
- * a : Attachment to Poll
- * -------------------------------------------
- * RETURNS:
- * Void
- */
-void pollButtonFunctions(Attachment *a)
-{
-    for (int i = 0; i < 8; i++)
-    {
-        if (*(a->buttonStatus) & (1 << i))
-        {
-            (a->buttonFunctions[i])();
-            uint8_t temp = 0b11111111;
-            temp ^= (1 << i);
-            *(a->buttonStatus) &= temp;
-        }
-    }
-}
-
-/**
  * FUNCTION: initAttachment
  * Initializes instance of attachment struct
  * -------------------------------------------
@@ -74,6 +49,35 @@ void initAttachment(Attachment *a)
 
     // initialize spi irq for control data
     spi_irq_init();
+}
+
+/**
+ * FUNCTION: pollButtonFunctions
+ * When called, polls each bit in attachment's buttonStatus,
+ * if the bit is set, execute the corresponding buttonFunction
+ * -------------------------------------------
+ * PARAMETERS:
+ * a : Attachment to Poll
+ * -------------------------------------------
+ * RETURNS:
+ * Void
+ */
+void pollButtonFunctions(Attachment *a)
+{
+    for (int i = 0; i < 8; i++)
+    {
+        if (*(a->buttonStatus) & (1 << i))
+        {
+            //if the buttons isnt meant to be held:
+            
+            (a->buttonFunctions[i])();
+            
+
+            uint8_t temp = 0b11111111;
+            temp ^= (1 << i);
+            *(a->buttonStatus) &= temp;
+        }
+    }
 }
 
 /**

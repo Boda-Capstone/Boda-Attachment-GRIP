@@ -25,6 +25,7 @@ typedef struct
 
 void initAttachment(Attachment *a);
 void pollButtonFunctions(Attachment *a);
+void buttonTimeout(Attachment *a);
 void spi_irq_init();
 void spi_irq();
 
