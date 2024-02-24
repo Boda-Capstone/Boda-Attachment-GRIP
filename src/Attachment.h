@@ -5,15 +5,33 @@
 #ifndef ATTACHMENT_H
 #define ATTACHMENT_H
 
-#ifndef ATT_INPUT
-#define ATT_INPUT
-extern uint8_t att_input;
-#endif
+extern uint16_t att_input;
 
-#ifndef ATT_OUTPUT
-#define ATT_OUTPUT
-extern uint8_t att_output;
-#endif
+extern uint16_t att_output;
+
+extern uint16_t WHO_AM_I;
+
+extern uint8_t buttons[8];
+
+#define X 0xBF
+#define CIRCLE 0xDF
+#define TRIANGLE 0xEF
+#define SQUARE 0x7F
+
+#define R1 0xF7
+#define R2 0xFD
+#define L1 0xFB
+#define L2 0xFE
+
+#define DRIGHT 0xDF
+#define DUP 0xEF
+#define DDOWN 0xBF
+#define DLEFT 0x7F
+
+#define START 0xF7
+#define SELECT 0xFE
+#define L3 0xFD
+#define R3 0xFB
 
 typedef void (*buttonFunction)(void);
 

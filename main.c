@@ -102,24 +102,24 @@ int main()
     // intialize pwm irq for servos
     pwm_irq_init();
 
-    // // Initialize two servos for finger 1
-    initServo(&servos[0], 0, &servoPWMS[0], 4.f, 8193, MD, 0);
+    // // Initialize two servos for finger 
+    initServo(&servos[0], 0, &servoPWMS[0], 16.f, 8193, MD, 0);
     // initServoMapping(&servos[0], 4095, 0);
-    setServoLimits(&servos[0], MAX16 / 2, 8192);
+    setServoLimits(&servos[0], MAX16 / 4, 8192);
 
-    initServo(&servos[1], 1, &servoPWMS[1], 4.f, MAX16 - 8191, MD, 1);
+    initServo(&servos[1], 1, &servoPWMS[1], 16.f, MAX16 - 8193, MD, 1);
     // initServoMapping(&servos[1], 4095, 0);
-    setServoLimits(&servos[1], MAX16 - 8192, MAX16 / 2);
+    setServoLimits(&servos[1], MAX16 / 4, 8192);
 
     initFinger(&leftFinger, &servos[0], &servos[1]);
 
-    initServo(&servos[2], 2, &servoPWMS[2], 4.f, MAX16 - 8191, MD, 1);
+    initServo(&servos[2], 2, &servoPWMS[2], 16.f, MAX16 - 8191, MD, 1);
     // initServoMapping(&servos[2], 4095, 0);
-    setServoLimits(&servos[2], MAX16 - 8192, MAX16 / 2);
+    setServoLimits(&servos[2], MAX16 / 4, 8192);
 
-    initServo(&servos[3], 3, &servoPWMS[3], 4.f, 8193, MD, 0);
+    initServo(&servos[3], 3, &servoPWMS[3], 16.f, 8193, MD, 0);
     // initServoMapping(&servos[3], 4095, 0);
-    setServoLimits(&servos[3], MAX16 / 2, 8192);
+    setServoLimits(&servos[3], MAX16 / 4, 8192);
     numServos = 4;
     initFinger(&rightFinger, &servos[2], &servos[3]);
 
