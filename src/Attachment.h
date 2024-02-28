@@ -13,31 +13,31 @@ extern uint16_t WHO_AM_I;
 
 extern uint8_t buttons[8];
 
-#define X 0xBF
-#define CIRCLE 0xDF
-#define TRIANGLE 0xEF
-#define SQUARE 0x7F
+#define ATT_X 0xBF
+#define ATT_CIRCLE 0xDF
+#define ATT_TRIANGLE 0xEF
+#define ATT_SQUARE 0x7F
 
-#define R1 0xF7
-#define R2 0xFD
-#define L1 0xFB
-#define L2 0xFE
+#define ATT_R1 0xF7
+#define ATT_R2 0xFD
+#define ATT_L1 0xFB
+#define ATT_L2 0xFE
 
-#define DRIGHT 0xDF
-#define DUP 0xEF
-#define DDOWN 0xBF
-#define DLEFT 0x7F
+#define ATT_DRIGHT 0xDF
+#define ATT_DUP 0xEF
+#define ATT_DDOWN 0xBF
+#define ATT_DLEFT 0x7F
 
-#define START 0xF7
-#define SELECT 0xFE
-#define L3 0xFD
-#define R3 0xFB
+#define ATT_START 0xF7
+#define ATT_SELECT 0xFE
+#define ATT_L3 0xFD
+#define ATT_R3 0xFB
 
 typedef void (*buttonFunction)(void);
 
 typedef struct
 {
-    uint8_t *buttonStatus;
+    uint16_t *buttonStatus;
     buttonFunction buttonFunctions[8];
 } Attachment;
 

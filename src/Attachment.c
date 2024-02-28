@@ -1,9 +1,10 @@
 #include "Attachment.h"
 
 uint16_t att_input;
-uint16_t att_output;
-uint16_t WHO_AM_I = 0x64;
-uint8_t buttons[8] = {X, CIRCLE, TRIANGLE, SQUARE, R1, R2, L1, L2};
+uint16_t att_output = 0x01;
+uint16_t WHO_AM_I = 'A1';
+uint8_t buttons[8] = {ATT_X, ATT_CIRCLE, ATT_TRIANGLE, ATT_SQUARE, ATT_R1, ATT_R2, ATT_L1, ATT_L2};
+
 /**
  * FUNCTION:
  *
@@ -39,7 +40,7 @@ void initAttachment(Attachment *a)
     a->buttonFunctions[7] = buttonEightFunction;
 
     // initialize SPI
-    spi_init(spi_default, 2 * 1000 * 1000);
+    spi_init(spi_default, 1000 * 1000);
     spi_set_format(spi_default, 16, 1, 0, true);
     spi_set_slave(spi_default, true);
 
@@ -95,34 +96,46 @@ void pollButtonFunctions(Attachment *a)
 void spi_irq()
 {
     spi_write16_read16_blocking(spi_default, (uint16_t *)&att_output, (uint16_t *)&att_input, 1);
-
-    switch ((uint8_t)((att_input >> 8) & 0xFF))
+    att_output = 0x01;
+    if ((uint8_t)((att_input >> 8) & 0xFF) != 0)
     {
-
-    case 0x01:
-        att_output = (uint16_t)buttons[0];
-        att_output |= (uint16_t)(buttons[1] << 8);
-        break;
-    case 0x02:
-        att_output = (uint16_t)buttons[2];
-        att_output |= (uint16_t)(buttons[3] << 8);
-        break;
-    case 0x03:
-        att_output = (uint16_t)buttons[4];
-        att_output |= (uint16_t)(buttons[5] << 8);
-        break;
-    case 0x04:
-        att_output = (uint16_t)buttons[6];
-        att_output |= (uint16_t)(buttons[7] << 8);
-    case 0x64:
-        att_output = WHO_AM_I;
-        break;
-    default:
-        break;
+        switch ((uint8_t)((att_input >> 8) & 0xFF))
+        {
+        case 0x01:
+            att_output = (uint16_t)buttons[0];
+            att_output |= ((uint16_t)buttons[1] << 8);
+            break;
+        case 0x02:
+            att_output = (uint16_t)buttons[2];
+            att_output |= ((uint16_t)buttons[3] << 8);
+            break;
+        case 0x03:
+            att_output = (uint16_t)buttons[4];
+            att_output |= ((uint16_t)buttons[5] << 8);
+            break;
+        case 0x04:
+            att_output = (uint16_t)buttons[6];
+            att_output |= ((uint16_t)buttons[7] << 8);
+            break;
+        case 0x05:
+            break;
+        case 0x0C:
+            att_output = 0x01;
+            break;
+        case 0x0D:
+            break;
+        case 0x0E:
+            att_output = 0xAA;
+        case 0x64:
+            att_output = WHO_AM_I;
+            break;
+        default:
+            break;
+        }
+        uint16_t temp = 0b1111111111111111;
+        temp ^= 0xF0;
+        att_input &= temp;
     }
-    uint16_t temp = 0b1111111111111111;
-    temp ^= 0xF0;
-    att_input &= temp;
 }
 
 /**
