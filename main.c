@@ -97,8 +97,6 @@ int main()
 
     initAttachment(&a);
 
-
-
     // intialize pwm irq for servos
     pwm_irq_init();
 
@@ -152,23 +150,23 @@ void buttonTwoFunction()
 // Button Three Function
 void buttonThreeFunction()
 {
-    // Square Pressed
-    for (uint8_t i = 0; i < numServos; i++)
-    {
-        modeDown(&servos[i]);
-    }
-    return;
+    // // Square Pressed
+    // for (uint8_t i = 0; i < numServos; i++)
+    // {
+    //     modeDown(&servos[i]);
+    // }
+    // return;
 }
 
 // Button Four Function
 void buttonFourFunction()
 {
-    // Triangle Pressed
-    for (uint8_t i = 0; i < numServos; i++)
-    {
-        modeUp(&servos[i]);
-    }
-    return;
+    // // Triangle Pressed
+    // for (uint8_t i = 0; i < numServos; i++)
+    // {
+    //     modeUp(&servos[i]);
+    // }
+    // return;
 }
 
 // Button Five Function

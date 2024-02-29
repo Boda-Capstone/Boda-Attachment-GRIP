@@ -3,7 +3,7 @@
 uint16_t att_input;
 uint16_t att_output = 0x01;
 uint16_t WHO_AM_I = 'A1';
-uint8_t buttons[8] = {ATT_X, ATT_CIRCLE, ATT_TRIANGLE, ATT_SQUARE, ATT_R1, ATT_R2, ATT_L1, ATT_L2};
+uint8_t buttons[8] = {ATT_X, ATT_CIRCLE, ATT_R1, ATT_R2, ATT_L1, ATT_L2, ATT_TRIANGLE, ATT_SQUARE};
 
 /**
  * FUNCTION:
