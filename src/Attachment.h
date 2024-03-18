@@ -13,6 +13,16 @@ extern uint16_t WHO_AM_I;
 
 extern uint8_t buttons[8];
 
+extern uint8_t data[128];
+
+extern uint8_t indices[8];
+
+extern uint8_t currentIndex;
+
+extern uint8_t indexMax;
+
+extern uint8_t indexMin;
+
 #define ATT_X 0xBF
 #define ATT_CIRCLE 0xDF
 #define ATT_TRIANGLE 0xEF
@@ -39,6 +49,7 @@ typedef struct
 {
     uint16_t *buttonStatus;
     buttonFunction buttonFunctions[8];
+
 } Attachment;
 
 void initAttachment(Attachment *a);
